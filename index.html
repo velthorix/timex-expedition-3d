@@ -9,6 +9,13 @@
     />
     <meta name="theme-color" content="#eee9e0" />
     <title>Timex Expedition — Metal Field / 3D Study</title>
+    <style>
+      /* Prevent a white flash before the main stylesheet is parsed. */
+      html {
+        background: #e9e2d7;
+      }
+    </style>
+    <link rel="stylesheet" href="/src/style.css" />
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%231b1a18'/%3E%3Cpath d='M18 20h28v6H26v5h16v6H26v7h20v6H18z' fill='%23eee9e0'/%3E%3C/svg%3E" />
   </head>
   <body data-theme="studio">
@@ -21,9 +28,11 @@
       </div>
 
       <header class="topbar">
-        <a class="brand" href="#" aria-label="Expedition home">
+        <!-- The intrinsic size and ink fallback stop the mark flashing large
+             and link-blue if the stylesheet is still being parsed. -->
+        <a class="brand" href="#" aria-label="Expedition home" style="color: var(--ink, #161513)">
           <span class="brand__mark" aria-hidden="true">
-            <svg viewBox="0 0 52 32" fill="none">
+            <svg viewBox="0 0 52 32" width="50" height="32" fill="none">
               <ellipse cx="26" cy="16" rx="24" ry="13.25" stroke="currentColor" stroke-width="1.25"/>
               <path d="M16 10.5h17v4.6H22v2.7h9.5v4.4H22v2.8h12.5v4.5H16V10.5Z" fill="currentColor"/>
               <path d="M22.5 15.2h-8M39.5 15.2h6M29.8 8.8h7.4M33.8 22.4h-6.6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
