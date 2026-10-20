@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="description"
+      content="An interactive, photorealistic 3D study of the Timex Expedition Metal Field wristwatch."
+    />
+    <meta name="theme-color" content="#eee9e0" />
+    <title>Timex Expedition — Metal Field / 3D Study</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='32' fill='%231b1a18'/%3E%3Cpath d='M18 20h28v6H26v5h16v6H26v7h20v6H18z' fill='%23eee9e0'/%3E%3C/svg%3E" />
+  </head>
+  <body data-theme="studio">
+    <div id="app">
+      <div id="stage" aria-hidden="true">
+        <div class="stage__glow"></div>
+        <canvas id="watch-canvas"></canvas>
+        <div class="stage__vignette"></div>
+        <div class="stage__grain"></div>
+      </div>
+
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="Expedition home">
+          <span class="brand__mark" aria-hidden="true">
+            <svg viewBox="0 0 52 32" fill="none">
+              <ellipse cx="26" cy="16" rx="24" ry="13.25" stroke="currentColor" stroke-width="1.25"/>
+              <path d="M16 10.5h17v4.6H22v2.7h9.5v4.4H22v2.8h12.5v4.5H16V10.5Z" fill="currentColor"/>
+              <path d="M22.5 15.2h-8M39.5 15.2h6M29.8 8.8h7.4M33.8 22.4h-6.6" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span class="brand__type">EXPEDITION</span>
+        </a>
+
+        <div class="topbar__meta">
+          <span class="topbar__index">FIELD SERIES <span>/</span> 001</span>
+          <button class="topbar__about" id="info-button-mobile" type="button" aria-label="About this model">
+            Case study <em>No.&nbsp;04</em>
+          </button>
+          <span class="status-pill"><i></i><span>INTERACTIVE 3D</span></span>
+        </div>
+      </header>
+
+      <section class="hero-copy">
+        <p class="eyebrow reveal reveal--1">Metal Field / 40&nbsp;mm</p>
+        <h1 class="reveal reveal--2">Built for<br /><span>the long way.</span></h1>
+        <p class="hero-copy__body reveal reveal--3">
+          Timex Expedition. Brushed stainless steel, a clean ivory dial and
+          full-grain leather that remembers every trail.
+        </p>
+        <div class="hero-copy__specs reveal reveal--4">
+          <span>50 m water resistance</span>
+          <span>Indiglo®</span>
+          <span>Quartz</span>
+        </div>
+      </section>
+
+      <nav class="view-rail reveal reveal--4" aria-label="Camera views">
+        <span class="view-rail__label">View</span>
+        <button class="rail-btn is-active" type="button" data-view="front" aria-label="Front view">
+          <span>01</span><b>Front</b>
+        </button>
+        <button class="rail-btn" type="button" data-view="three-quarter" aria-label="Three quarter view">
+          <span>02</span><b>Angle</b>
+        </button>
+        <button class="rail-btn" type="button" data-view="back" aria-label="Case back view">
+          <span>03</span><b>Back</b>
+        </button>
+      </nav>
+
+      <div class="interaction-hint" aria-hidden="true">
+        <span class="mouse-glyph"></span>
+        <span>Drag to inspect</span>
+        <span class="hint-dot"></span>
+        <span>Scroll to zoom</span>
+      </div>
+
+      <section class="control-dock" aria-label="Watch controls">
+        <div class="control-dock__watch-time" title="Displayed watch time">
+          <span class="watch-time__label">Dial time</span>
+          <strong id="dial-time">10:09</strong>
+          <span class="watch-time__live" id="watch-time-live"><i></i>Running</span>
+        </div>
+
+        <span class="control-dock__divider" aria-hidden="true"></span>
+
+        <div class="control-dock__actions">
+          <button class="dock-btn" id="reset-camera" type="button" aria-label="Reset camera" title="Reset camera">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 8.5A8 8 0 1 1 4 14" stroke="currentColor" stroke-width="1.45" stroke-linecap="round"/><path d="M4.2 4.3v4.4h4.4" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Reset</span>
+          </button>
+          <button class="dock-btn" id="toggle-rotate" type="button" aria-pressed="false" aria-label="Toggle automatic rotation" title="Auto rotate">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 12a8 8 0 0 1-14.3 4.9M4 12a8 8 0 0 1 14.3-4.9" stroke="currentColor" stroke-width="1.45" stroke-linecap="round"/><path d="m18.7 3.6.2 3.8-3.8.2M5.3 20.4l-.2-3.8 3.8-.2" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Rotate</span>
+          </button>
+          <button class="dock-btn" id="toggle-crystal" type="button" aria-pressed="true" aria-label="Toggle crystal glass" title="Crystal reflections">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3.2c3.1 3.5 5.6 6.2 5.6 9a5.6 5.6 0 1 1-11.2 0c0-2.8 2.5-5.5 5.6-9Z" stroke="currentColor" stroke-width="1.35"/><path d="M9.2 13.2c.4 1.6 1.8 2.2 3.1 2.1" stroke="currentColor" stroke-width="1.25" stroke-linecap="round"/></svg>
+            <span>Crystal</span>
+          </button>
+          <button class="dock-btn dock-btn--accent" id="open-customizer" type="button" aria-haspopup="dialog" aria-controls="customizer" aria-expanded="false" aria-label="Open watch customizer" title="Customize">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 7h14M5 17h14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/><circle cx="9" cy="7" r="2.15" fill="var(--bg-strong)" stroke="currentColor" stroke-width="1.35"/><circle cx="15" cy="17" r="2.15" fill="var(--bg-strong)" stroke="currentColor" stroke-width="1.35"/></svg>
+            <span>Customize</span>
+          </button>
+        </div>
+
+        <span class="control-dock__divider control-dock__divider--end" aria-hidden="true"></span>
+
+        <button class="soundless" type="button" id="info-button" aria-label="About this model">
+          <span class="soundless__title">Case study</span>
+          <span class="soundless__sub">No. 04</span>
+        </button>
+      </section>
+
+      <aside class="customizer" id="customizer" role="dialog" aria-modal="false" aria-labelledby="customizer-title" aria-hidden="true">
+        <div class="customizer__top">
+          <p class="eyebrow">Personalise</p>
+          <button class="panel-close" id="close-customizer" type="button" aria-label="Close customizer">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <h2 id="customizer-title">Your Expedition</h2>
+
+        <div class="custom-group">
+          <div class="custom-group__head">
+            <span>Strap leather</span>
+            <strong id="strap-name">Walnut</strong>
+          </div>
+          <div class="swatches" role="group" aria-label="Strap color">
+            <button class="swatch is-active" type="button" data-strap="Walnut" style="--swatch:#7f563e" aria-label="Walnut leather" aria-pressed="true"></button>
+            <button class="swatch" type="button" data-strap="Saddle" style="--swatch:#a97b59" aria-label="Saddle leather" aria-pressed="false"></button>
+            <button class="swatch" type="button" data-strap="Espresso" style="--swatch:#50362b" aria-label="Espresso leather" aria-pressed="false"></button>
+            <button class="swatch" type="button" data-strap="Black" style="--swatch:#302c29" aria-label="Black leather" aria-pressed="false"></button>
+          </div>
+        </div>
+
+        <div class="custom-group">
+          <div class="custom-group__head">
+            <span>Lighting</span>
+            <strong id="light-name">Studio</strong>
+          </div>
+          <div class="segment" role="group" aria-label="Lighting preset">
+            <button class="segment__btn is-active" type="button" data-light="studio" aria-pressed="true">Studio</button>
+            <button class="segment__btn" type="button" data-light="daylight" aria-pressed="false">Daylight</button>
+            <button class="segment__btn" type="button" data-light="noir" aria-pressed="false">Noir</button>
+          </div>
+        </div>
+
+        <div class="custom-group">
+          <div class="custom-group__head">
+            <span>Time setting</span>
+            <button class="text-btn" id="set-live-time" type="button" aria-pressed="false">Use live time</button>
+          </div>
+          <div class="time-row">
+            <label for="hour-input">Hour <output id="hour-output">10</output></label>
+            <input id="hour-input" type="range" min="0" max="23" step="1" value="10" />
+          </div>
+          <div class="time-row">
+            <label for="minute-input">Minute <output id="minute-output">09</output></label>
+            <input id="minute-input" type="range" min="0" max="59" step="1" value="9" />
+          </div>
+          <label class="switch-row">
+            <span>Sweeping seconds</span>
+            <input id="seconds-toggle" type="checkbox" checked />
+            <i aria-hidden="true"></i>
+          </label>
+        </div>
+
+        <div class="custom-group custom-group--specs">
+          <div class="spec-line"><span>Case</span><span>Brushed stainless steel</span></div>
+          <div class="spec-line"><span>Diameter</span><span>40 mm</span></div>
+          <div class="spec-line"><span>Crystal</span><span>Domed mineral glass</span></div>
+          <div class="spec-line"><span>Strap</span><span>Full-grain leather, 20 mm</span></div>
+        </div>
+
+        <p class="customizer__note">Procedural 3D study. Every surface, stitch and reflection is rendered in real time.</p>
+      </aside>
+
+      <div class="panel-scrim" id="panel-scrim" hidden></div>
+
+      <section class="info-panel" id="info-panel" role="dialog" aria-modal="false" aria-labelledby="info-title" aria-hidden="true">
+        <button class="panel-close panel-close--info" id="close-info" type="button" aria-label="Close about panel">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </button>
+        <p class="eyebrow">Case study / 001</p>
+        <h2 id="info-title">An honest field instrument.</h2>
+        <p>The Expedition Metal Field is a study in restraint. Its brushed steel case is broad enough to protect the dial, yet slim enough to disappear under a cuff. A warm ivory face carries full Arabic numerals, a date window and a second time scale.</p>
+        <p>The leather is cut with a subtle taper, double stitched at the edges and stamped with the Expedition mark. Soft key lighting pulls the grain and brushed metal into relief.</p>
+        <div class="info-panel__meta">
+          <span>Timex / Expedition</span>
+          <span>Reference TW4B</span>
+          <span>Interactive study</span>
+        </div>
+        <button class="primary-btn" type="button" data-close-info>Return to the watch</button>
+      </section>
+
+      <div class="intro" id="intro" aria-live="polite">
+        <div class="intro__inner">
+          <div class="intro__brand">
+            <span class="intro__mark">E</span>
+            <span>Expedition</span>
+          </div>
+          <p class="intro__eyebrow">An interactive object study</p>
+          <h2>Metal Field<span>.</span></h2>
+          <div class="intro__loader"><i></i></div>
+          <p class="intro__status" id="intro-status">Assembling the movement</p>
+        </div>
+      </div>
+
+      <div class="toast" id="toast" role="status" aria-live="polite"></div>
+      <noscript><div class="no-script">This experience requires JavaScript enabled.</div></noscript>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
