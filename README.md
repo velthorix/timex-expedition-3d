@@ -91,4 +91,4 @@ Every surface and texture is authored in code, so the visual result is resolutio
 
 ## Disclaimer
 
-This is an independent, non-commercial design study made for learning and portfolio purposes. It is not affiliated with, endorsed by or sponsored by Timex Group. “Timex” and “Expedition” are trademarks of their respective owner. The watch design is inspired by the Timex Expedition Metal Field reference TW4B.
+It is not affiliated with, endorsed by or sponsored by Timex Group. “Timex” and “Expedition” are trademarks of their respective owner. The watch design is inspired by the Timex Expedition Metal Field reference TW4B.
