@@ -2,6 +2,8 @@
 
 A photorealistic, interactive 3D study of the Timex Expedition Metal Field, built with Three.js. The watch, leather, stitching, crystal and dial print are generated and rendered in real time in the browser — no 3D model files or photographic assets.
 
+[**Open the live study →**](https://timex-expedition-3d.vercel.app/)
+
 ![Timex Expedition Metal Field 3D study](docs/desktop.jpg)
 
 <p align="center">
